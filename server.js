@@ -6,13 +6,12 @@ const rowdy = require('rowdy-logger')
 
 // config express app
 const app = express()
-const PORT = process.env.PORT || 3001 
+const PORT = process.env.PORT || 8000 
 // for debug logging 
 const rowdyResults = rowdy.begin(app)
 // cross origin resource sharing 
 app.use(cors())
 // request body parsing
-app.use(express.urlencoded({ extended: false })) // optional 
 app.use(express.json())
 
 // GET / -- test index route
