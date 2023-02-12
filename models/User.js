@@ -10,7 +10,14 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String
-  }
+  },
+  Campaigns: [{
+    // tell mongoose that this is a reference
+    type: mongoose.Schema.Types.ObjectId,
+    // tell mongoose what is being reference
+    ref: 'Campaign'
+
+  }]
 }, {
   timestamps: true
 })
