@@ -1,7 +1,6 @@
-// required packages
 const express = require('express')
 const { isValidObjectId } = require('mongoose')
-const {campaign} = require('../models')
+const {Campaign} = require('../models')
 const router = express.Router()
 const db = require('../models')
 const authLockedRoute = require('./api-v1/authLockedRoute')
@@ -12,7 +11,7 @@ const authLockedRoute = require('./api-v1/authLockedRoute')
 router.get('/:id', async (req,res) =>{
     try{
        
-        const campaign = await db.campaign.findOne({
+        const campaign = await db.Campaign.findOne({
             _id: req.params.id
         })
         res.json(campaign)
@@ -45,23 +44,22 @@ router.post('/new', authLockedRoute, async (req,res) =>{
   // find user
   const existingUser = res.locals.user
     // creates a new item
-    const newCampaign = await db.Campaign.findOneAndUpdate( 
-        {name: req.body.name} ,
+    const newCampaign = await db.Campaign.create({
+        name: req.body.name,
+        price: req.body.price,
+        content: req.body.content, 
+        image: req.body.image,
+        userId: existingUser._id
+    })
 
-        { price: req.body.price , 
-          content: req.body.content, 
-          image: req.body.image } ,
-        //upsert is an update or create command
-        {upsert: true, new: true}
-    )
-
-    //associates user with item
-    existingUser.campaigns.push(newCampaign._id)
-    await existingUser.save()
-
-    // associates item with a user
-    newCampaign.userId = existingUser._id
-    await newCampaign.save()
+    //associates user with campaign
+    if (existingUser.campaigns) {
+        existingUser.campaigns.push(newCampaign._id);
+    } else {
+        existingUser.campaigns = [newCampaign._id];
+    }
+    await existingUser.save();
+    
 
     res.json({msg: 'user created item'})
 
@@ -77,7 +75,7 @@ router.put('/:id', authLockedRoute, async (req,res) =>{
     try{
 
     // update an existing item
-    const updateCampaign = await db.Campaign.updateOne( 
+    const updateCampaign = await db.Campaign.findOneAndUpdate( 
         {_id: req.params.id} , 
         { 
             $set: {
@@ -87,8 +85,7 @@ router.put('/:id', authLockedRoute, async (req,res) =>{
             image: req.body.image
             }
         } ,
-        //upsert is an update or create command
-        {upsert: true, new: true}
+        {new: true}
     )
 
     res.json({msg: `user updated campaign`})
