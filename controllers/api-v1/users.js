@@ -43,7 +43,7 @@ router.post('/register', async (req, res) => {
     }
 
     // sign jwt and send back
-    const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 3600 })
+    const token = await jwt.sign(payload, process.env.JWT_SECRET)
 
     res.json({ token })
   } catch (error) {
@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
     }
 
     // sign jwt and send back
-    const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 3600 })
+    const token = await jwt.sign(payload, process.env.JWT_SECRET)
 
     res.json({ token })
   } catch(error) {
