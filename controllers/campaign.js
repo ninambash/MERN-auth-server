@@ -105,20 +105,13 @@ router.delete('/:id', async (req, res) => {
     console.log(campaignToDelete, 'campaign to delete')
 
     //find user that created the item in the user table
-    //const getUser = res.locals.user;
-    // await db.User.findOne({
-    //     _id: itemToDelete.userId
-    // })
-    //console.log(getUser, 'get user')
 
     //update user table to remove one item from user table
     const deleteFromUser = await db.User.updateOne(
       { _id: campaignToDelete.userId },
       // {_id: itemToDelete.userId},
       { $pull: { campaigns: { $in: [req.params.id] } } }
-    );
-
-
+    )
     //delete entire item from item table
     const deletedCampaign = await db.Campaign.findByIdAndDelete(req.params.id);
     console.log(deletedCampaign,'deletedCampaign')
