@@ -1,18 +1,12 @@
-# MERN Auth Server
+
 # Project 4
-
 GoodwillGuru
-
 # Pitch
-
 Introducing a revolutionary new app designed to connect people in need with those who want to help. Our app provides a platform for users to create and manage fundraising campaigns to help them access essential resources, like food, shelter, and medical care. The app features RESTful routing and is powered by a Postgres database, ensuring a seamless and efficient experience for users. With an intuitive and user-friendly interface built with React, it's never been easier to make a difference in the world. Join us in our mission to make the world a better place, one campaign at a time.
 
 # Deployed link
 
-# ()
-
 # Install
-
 1.Fork and clone repository<br>
 2.In your terminal run command: npm install (this will install all needed packages)<br>
 3.Run the nodemon and navigate to localHost:3000 in your browser and you are all set! Enjoy!<br>
@@ -36,7 +30,7 @@ Express<br>
 React<br>
 Axios<br>
 JavaScript<br>
-Postgresql<br>
+MongoDB<br>
 
 # User Story
 
@@ -64,7 +58,6 @@ Postgresql<br>
    <br>
 
 # potential roadblocks
-
 1.Ensuring the security and privacy of user data.<br>
 2.Handling transactions and donations securely.<br>
 3.Ensuring the reliability and scalability of the platform.<br>
