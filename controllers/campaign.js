@@ -5,7 +5,6 @@ const router = express.Router();
 const db = require('../models');
 const authLockedRoute = require('./api-v1/authLockedRoute');
 
-
 // mount our routes on the router
 
 // GET /:id -- get one item
@@ -81,8 +80,8 @@ router.put('/:id', authLockedRoute, async (req, res) => {
           image: req.body.image,
         },
       },
-     //upsert is an update or create command
-     {upsert: true, new: true}
+      //upsert is an update or create command
+      { upsert: true, new: true }
     );
 
     res.json({ msg: `user updated campaign` });
@@ -100,9 +99,8 @@ router.delete('/:id', async (req, res) => {
     //get item to delete from items table, need to get info before we delete the table to use in the user table
     const campaignToDelete = await db.Campaign.findOne({
       _id: req.params.id,
-      
     });
-    console.log(campaignToDelete, 'campaign to delete')
+    console.log(campaignToDelete, 'campaign to delete');
 
     //find user that created the item in the user table
 
@@ -111,10 +109,10 @@ router.delete('/:id', async (req, res) => {
       { _id: campaignToDelete.userId },
       // {_id: itemToDelete.userId},
       { $pull: { campaigns: { $in: [req.params.id] } } }
-    )
+    );
     //delete entire item from item table
     const deletedCampaign = await db.Campaign.findByIdAndDelete(req.params.id);
-    console.log(deletedCampaign,'deletedCampaign')
+    console.log(deletedCampaign, 'deletedCampaign');
 
     res.json('item deleted from items table and from user who created it');
   } catch (err) {
