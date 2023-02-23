@@ -1,13 +1,15 @@
+const express = require('express');
+const { isValidObjectId } = require('mongoose');
+const  Campaign  = require('../models');
+const db = require('../models')
 
-//const { isValidObjectId } = require('mongoose');
-//const  Campaign  = require('../models');
+const authLockedRoute = require('./api-v1/authLockedRoute');
 const router = express.Router();
 //const db = require('../models');
 // const db = require("../models");
-// const db = require("./..models");
-const db = require("/models")
+// const db = require("./.models");
+// const db = require("../../models")
 
-const authLockedRoute = require('./api-v1/authLockedRoute');
 
 // mount our routes on the router
 
