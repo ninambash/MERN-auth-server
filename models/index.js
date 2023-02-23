@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const dbName = 'mernAuth';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/' + dbName;
-
 if (!MONGODB_URI) {
   console.error('MongoDB URI is missing. Check your environment variables.');
   process.exit(1);
