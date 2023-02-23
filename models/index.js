@@ -28,6 +28,6 @@ db.on('error', (err) => {
 
 module.exports = {
   User: require('./User'),
-  Campaign: require('./Campaign'),
+  Campaign: require('./campaign'),
   Donations: require('./Donations')
 };
