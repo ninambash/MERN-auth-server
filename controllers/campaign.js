@@ -1,7 +1,7 @@
 const express = require('express');
 const { isValidObjectId } = require('mongoose');
-const  Campaign  = require('../models');
-const db = require('./../models');
+const  {Campaign}  = require('../models');
+const db = require('../models')
 
 const authLockedRoute = require('./api-v1/authLockedRoute');
 const router = express.Router();
