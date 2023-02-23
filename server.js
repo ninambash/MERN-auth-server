@@ -24,15 +24,16 @@ app.get('/', (req, res) => {
 })
 ////to post the payment request
 app.post('/payment', async (req, res) => {
-  let status, error;
-  const { token, amount } = req.body;
+  let status;
   try {
+    const { token, amount } = req.body;
     await Stripe.charges.create({
       source: token.id,
       amount,
       currency: 'usd',
     });
     status = 'success';
+    res.json({ status });
   } catch (error) {
     console.log(error);
     status = 'Failure';
@@ -50,4 +51,3 @@ app.listen(PORT, () => {
   rowdyResults.print()
   console.log(`is that port ${PORT} I hear? 🙉`)
 })
-
