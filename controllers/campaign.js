@@ -17,10 +17,10 @@ const router = express.Router();
 // GET /:id -- get one item
 router.get('/:id', async (req, res) => {
   try {
-    const campaign = await Campaign.findOne({
+    const campaigns = await Campaign.findOne({
       _id: req.params.id,
     });
-    res.json(campaign);
+    res.json(campaigns);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -33,8 +33,8 @@ router.get('/:id', async (req, res) => {
 // GET / -- display all items
 router.get('/', async (req, res) => {
   try {
-    const campaigns = await db.Campaign.find();
-    res.json(campaigns);
+    const Campaigns = await db.Campaign.find();
+    res.json(Campaigns);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -59,10 +59,10 @@ router.post('/new', authLockedRoute, async (req, res) => {
     console.log(newCampaign);
 
     //associates user with campaign
-    if (existingUser.campaigns) {
-      existingUser.campaigns.push(newCampaign._id);
+    if (existingUser.Campaigns) {
+      existingUser.Campaigns.push(newCampaign._id);
     } else {
-      existingUser.campaigns = [newCampaign._id];
+      existingUser.Campaigns = [newCampaign._id];
     }
     await existingUser.save();
 
@@ -105,18 +105,18 @@ router.put('/:id', authLockedRoute, async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     //get item to delete from items table, need to get info before we delete the table to use in the user table
-    const campaignToDelete = await db.Campaign.findOne({
+    const CampaignToDelete = await db.Campaign.findOne({
       _id: req.params.id,
     });
-    console.log(campaignToDelete, 'campaign to delete');
+    console.log(CampaignToDelete, 'campaign to delete');
 
     //find user that created the item in the user table
 
     //update user table to remove one item from user table
     const deleteFromUser = await db.User.updateOne(
-      { _id: campaignToDelete.userId },
+      { _id: CampaignToDelete.userId },
       // {_id: itemToDelete.userId},
-      { $pull: { campaigns: { $in: [req.params.id] } } }
+      { $pull: { Campaigns: { $in: [req.params.id] } } }
     );
     //delete entire item from item table
     const deletedCampaign = await db.Campaign.findByIdAndDelete(req.params.id);
