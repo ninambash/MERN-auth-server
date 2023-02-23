@@ -1,10 +1,6 @@
-
-//const { isValidObjectId } = require('mongoose');
-//const  Campaign  = require('../models');
+const express = require('express');
 const router = express.Router();
-//const db = require('../models');
 const db = require("../models");
-
 const authLockedRoute = require('./api-v1/authLockedRoute');
 
 // mount our routes on the router
@@ -12,7 +8,7 @@ const authLockedRoute = require('./api-v1/authLockedRoute');
 // GET /:id -- get one item
 router.get('/:id', async (req, res) => {
   try {
-    const campaign = await db.Campaign.findOne({
+    const campaign = await db['Campaign'].findOne({
       _id: req.params.id,
     });
     res.json(campaign);
@@ -27,7 +23,7 @@ router.get('/:id', async (req, res) => {
 // GET / -- display all items
 router.get('/', async (req, res) => {
   try {
-    const campaigns = await db.Campaign.find();
+    const campaigns = await db['Campaign'].find();
     res.json(campaigns);
   } catch (err) {
     console.log(err);
@@ -43,7 +39,7 @@ router.post('/new', authLockedRoute, async (req, res) => {
     // find user
     const existingUser = res.locals.user;
     // creates a new item
-    const newCampaign = await db.Campaign.create({
+    const newCampaign = await db['Campaign'].create({
       name: req.body.name,
       price: req.body.price,
       content: req.body.content,
@@ -68,11 +64,12 @@ router.post('/new', authLockedRoute, async (req, res) => {
     });
   }
 });
+
 // PUT /item/:id -- update one item
 router.put('/:id', authLockedRoute, async (req, res) => {
   try {
     // update an existing item
-    const updateCampaign = await db.Campaign.updateOne(
+    const updateCampaign = await db['Campaign'].updateOne(
       { _id: req.params.id },
       {
         $set: {
@@ -99,10 +96,10 @@ router.put('/:id', authLockedRoute, async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     //get item to delete from items table, need to get info before we delete the table to use in the user table
-    const campaignToDelete = await db.Campaign.findOne({
+    const campaignToDelete = await db['Campaign'].findOne({
       _id: req.params.id,
     });
-    console.log(campaignToDelete, 'campaign to delete');
+    console.log(campaignToDelete, 'campaign')
 
     //find user that created the item in the user table
 
