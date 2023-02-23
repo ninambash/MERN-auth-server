@@ -41,7 +41,7 @@ app.post('/payment', async (req, res) => {
 });
 
 // controllers
-app.use('/api-v1/user', require('./controllers/api-v1/user.js'))
+app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
 app.use('/campaign', require('./controllers/campaign.js'))
 app.use('/donation', require('./controllers/donation.js'))
 
