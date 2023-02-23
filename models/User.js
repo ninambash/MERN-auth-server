@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  Campaign: [{
+  Campaigns: [{
     // tell mongoose that this is a reference
     type: mongoose.Schema.Types.ObjectId,
     // tell mongoose what is being reference
