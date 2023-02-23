@@ -1,6 +1,6 @@
 const express = require('express')
 const { isValidObjectId } = require('mongoose')
-const {Donation} = require('../models')
+const Donation = require('../models')
 const router = express.Router()
 const db = require('../models')
 const authLockedRoute = require('./api-v1/authLockedRoute')
@@ -11,7 +11,7 @@ const authLockedRoute = require('./api-v1/authLockedRoute')
 router.get('/:id', async (req,res) =>{
     try{
        
-        const donation = await db.Donation.findOne({
+        const donation = await db.Donations.findOne({
             _id: req.params.id
         })
         res.json(donation)
@@ -27,7 +27,7 @@ router.get('/:id', async (req,res) =>{
 // GET / -- display all items
 router.get('/', async (req,res) =>{
     try{
-        const Donations = await db.Donation.find()
+        const Donations = await db.Donations.find()
         res.json(Donations)
     } catch(err){
         console.log(err)
@@ -44,7 +44,7 @@ router.post('/new', authLockedRoute, async (req,res) =>{
   // find user
   const existingUser = res.locals.user
     // creates a new item
-    const newDonation = await db.Donation.create({
+    const newDonation = await db.Donations.create({
         name: req.body.name,
         price: req.body.price,
         content: req.body.content, 
@@ -74,7 +74,7 @@ router.put('/:id', authLockedRoute, async (req,res) =>{
     try{
 
     // update an existing item
-    const updateDonation = await db.Donation.findOneAndUpdate( 
+    const updateDonation = await db.Donations.findOneAndUpdate( 
         {_id: req.params.id} , 
         { 
             $set: {
