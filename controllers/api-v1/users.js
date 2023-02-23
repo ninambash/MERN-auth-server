@@ -1,6 +1,6 @@
 const router = require('express').Router()
 // const db = require('../../models')
-const db = require ("./models/User.js")
+const db = require (".././api-v1/users.js")
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
