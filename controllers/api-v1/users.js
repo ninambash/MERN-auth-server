@@ -1,7 +1,5 @@
 const router = require('express').Router();
-// const db = require('../../models')
 const db = require('../../models');
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authLockedRoute = require('./authLockedRoute');
@@ -20,7 +18,9 @@ router.post('/register', async (req, res) => {
     });
 
     // don't allow emails to register twice
-    if (findUser) return res.status(400).json({ msg: 'email exists already' });
+    if (findUser) {
+      return res.status(400).json({ msg: 'email exists already' });
+    }
 
     // hash password
     const password = req.body.password;
@@ -64,8 +64,9 @@ router.post('/login', async (req, res) => {
     const noLoginMessage = 'Incorrect username or password';
 
     // if the user is not found in the db, return and sent a status of 400 with a message
-    if (!foundUser)
+    if (!foundUser) {
       return res.status(400).json({ msg: noLoginMessage, body: req.body });
+    }
 
     // check the password from the req body against the password in the database
     const matchPasswords = await bcrypt.compare(
@@ -74,8 +75,9 @@ router.post('/login', async (req, res) => {
     );
 
     // if provided password does not match, return an send a status of 400 with a message
-    if (!matchPasswords)
+    if (!matchPasswords) {
       return res.status(400).json({ msg: noLoginMessage, body: req.body });
+    }
 
     // create jwt payload
     const payload = {
